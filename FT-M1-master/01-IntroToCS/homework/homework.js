@@ -2,11 +2,11 @@
 
 function BinarioADecimal(num) {
   // tu codigo aca
-  var array = num.split('');
-  var sum = 0;
-
-  for (var i=0; i<array.length; i++){
-    sum = sum + 2**(array.length -i -1) * array[i]
+  let sum = 0;
+  let position = 0;
+  for (var i=num.length - 1; i>=0; i--){
+    sum = sum + 2**position * num[i];
+    position++
   }
 
   return sum;
@@ -14,9 +14,12 @@ function BinarioADecimal(num) {
 
 function DecimalABinario(num) {
   // tu codigo aca
-  if (num === 0) return '0';
-  if (num === 1) return '1';
-  return DecimalABinario(Math.floor(num/2)) + (num%2)
+  let resto = [];
+  while (num > 0) {
+    resto.unshift(num % 2);
+    num = Math.floor(num / 2);
+  }
+ return resto.join("");
 }
 
 
