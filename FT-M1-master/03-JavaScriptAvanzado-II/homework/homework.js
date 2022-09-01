@@ -20,10 +20,10 @@ function counter() {
   otroContador()      // 3
    */
   let cont = 0;
-  return function(){
+  return function () {
     cont++;
     return cont;
-  }
+  };
 }
 
 function cacheFunction(cb) {
@@ -34,28 +34,34 @@ function cacheFunction(cb) {
 
   cacheFunction debe retornar una función. Esta función debe aceptar un argumento (arg) e invocar a cb con ese argumento; hecho eso, debe guardar el argumento junto con el resultado de la invocación (tip: usá un objeto donde cada propiedad sea el argumento, y su valor el resultado de la correspondiente invocación a cb) de manera que, la próxima vez que reciba el mismo argumento, no sea necesario volver a invocar a cb, porque el resultado estará guardado en la "memoria caché".
 
-
   Ejemplo:
+
   function square(n){
     return n * n
   }
 
   const squareCache = cacheFunction(square)
-
   squareCache(5)    // invocará a square(5), almacenará el resultado y lo retornará
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
-
   */
- let cache = {};
- return function(i) {
-  if (cache.hasOwnProperty(i)){
-    return cache[i];
-  }
-  else{
-    cache[i] = cb(i);
-    return cache[i];
-  }
- }
+
+  let cache = {};
+
+
+  return function (arg) {
+
+
+    if (cache.hasOwnProperty(arg)) {
+      return cache.arg;
+    } 
+    
+    else {
+      cache[arg] = cb(arg);
+      return cache[arg];
+    }
+
+
+  };
 }
 
 // Bind
@@ -95,9 +101,9 @@ function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
   return delimitadorIzquierda + cadena + delimitadorDerecha;
 }
 
-let textoAsteriscos = crearCadena.bind(this, '*', '*');
-let textoGuiones = crearCadena.bind(null, '-', '-');
-let textoUnderscore = crearCadena.bind (undefined, '_', '_');
+let textoAsteriscos = crearCadena.bind(this, "*", "*");
+let textoGuiones = crearCadena.bind(null, "-", "-");
+let textoUnderscore = crearCadena.bind(undefined, "_", "_");
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
