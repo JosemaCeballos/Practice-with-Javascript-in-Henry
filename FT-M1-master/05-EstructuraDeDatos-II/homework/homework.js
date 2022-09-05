@@ -34,15 +34,16 @@ LinkedList.prototype.remove = function(){
   let current = this.head;
   if (!current) return null;
 
-  if (!current.next) {
+  if (!current.next){
     let aux = this.head.value;
-    this.head=null;
+    this.head = null;
     return aux;
   }
 
-  while(current.next.next){
+  while (current.next.next){
     current = current.next;
   }
+
   let aux = current.next.value;
   current.next = null;
   return aux;
@@ -89,7 +90,47 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.buckets = [];
+  this.numBuckets = 35;
+}
+
+HashTable.prototype.hash = function (key){
+  let acumulador = 0;
+  //n o m b r e
+  for (const char of key){
+    const num = char.charCodeAt();
+    acumulador = acumulador + num;
+  }
+
+  return acumulador % this.numBuckets; //lo que quiero es el modulo de la division
+}
+
+HashTable.prototype.set = function(key,value) {
+  const index = this.hash(key);
+
+  
+  if (!this.buckets[index]) this.buckets[index] = {};
+  
+  this.buckets[index][key] = value;
+
+}
+
+HashTable.prototype.get = function(key){
+  const index = this.hash(key);
+  let bucket = this.buckets[index];
+
+  if(bucket) return bucket[key];
+  
+  return null;
+
+}
+
+HashTable.prototype.hasKey = function(key) {
+  if (this.get(key)) return true;
+
+  return false;
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
